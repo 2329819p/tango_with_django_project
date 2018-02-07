@@ -1,15 +1,16 @@
-
-
 # Create your views here.
 
 from django.http import HttpResponse
 from django.shortcuts import render
 from rango.models import Category
 from rango.models import Page
+from rango.forms import CategoryForm
+
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
-    context_dict = {'categories':category_list}
+    page_list = Page.objects.order_by('-views')[:5]
+    context_dict = {'categories':category_list,'page':page_list}
     return render(request, 'rango/index.html', context=context_dict)
 
 
@@ -22,13 +23,23 @@ def show_category(request, category_name_slug):
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        page = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
         context_dict['category'] = category
     except Category.DoesNotExit:
         context_dict['pages'] = None
         context_dict['category'] = None
 
-    return render(request, 'rango/category.heml', context_dict)
+    return render(request, 'rango/category.html', context_dict)
 
-    
+def add_category(request):
+    form = CategoryForm()
+    if request.method == 'Post':
+        form = CategoryForm(request.Post)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+        else:
+            print(form.errors)
+    return render(request, 'rango/add_category.html', {'form': form})
+
