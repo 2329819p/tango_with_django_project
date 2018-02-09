@@ -22,6 +22,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 #print(os.path.dirname(__file__))
 #print(os.path.dirname(os.path.dirname(__file__)))
 
+SEESION_EXPIRE_AT_BROWSER_CLOSE = True
+
 #Static path
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
@@ -79,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
             ],
+            
         },
     },
 ]
@@ -135,3 +138,21 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = "/media/"
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': { 'min_length': 6, }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+LOGIN_URL = '/rango/login'

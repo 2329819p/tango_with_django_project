@@ -1,14 +1,11 @@
-<html>
-	<head>
-		<title>About</title>
-	</head>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
 
-	<boday>
+{% block title_block %}
+	about Rango
+{% endblock %}
 
-		<h1>This is about<h1>
-
-		<div>
-			<img src = "{{ MEDIA_URL }}cat.jpg" />
-		</div>
-	</body>
-</html>
+{% block body_block %}
+	<h1>This is about<h1>
+	<img src = "{{ MEDIA_URL }}cat.jpg" />
+{% endblock %}
